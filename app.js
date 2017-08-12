@@ -26,16 +26,6 @@ app.use(session({
 	saveUninitialized: true
 }));
 
-app.get('/sw.js', function(req, res){
-	res.setHeader('content-type', 'text/javascript');
-	res.sendFile(__dirname + '/sw.js');
-});
-
-app.get('/icon.png', function(req, res){
-	res.setHeader('content-type', 'image/png');
-	res.sendFile(__dirname + '/public/img/icon.png');
-});
-
 app.use('/', function(req, res, next){
 	if(!req.session.userid && req.originalUrl != '/login'){
 		console.log('/ called - not logged in');
@@ -61,13 +51,9 @@ http.listen(51978, function(){
 var sio = io.listen(http);
 
 sio.set('authorization', function(data, accept){
-	if(data.headers.cookie){
-		var id = cookie.parse(data.headers.cookie)['connect.sid'];
-		var sessionId = id.split(".")[0].split(":")[1];
-	} else {
+	if(!data.headers.cookie){
 		return accept('No cookie', false);
-	}
-	
+	}	
 	accept(null, true);
 });
 
@@ -90,13 +76,5 @@ sio.sockets.on('connection', function(socket){
 			}
 		}
 		sio.sockets.emit('sync', connections.length)
-	});
-	
-	socket.on('test', function(data, fn){
-		console.log('test called from client');
-		fs.readFile(__dirname + '/views/home/test.html', 'utf8', function(err, html){
-			if (err) throw err;
-			fn(html);
-		});
 	});
 });

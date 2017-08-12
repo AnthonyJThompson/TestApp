@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
-	<link rel="manifest" href="/manifest.json">
 	<title>Tester app - Login</title>
 	<style>.login-panel{width:300px}.login-header h3{font-size:30px;margin-top:10px;margin-bottom:10px}.login-panel *,.login-panel{margin-left:auto;margin-right:auto;text-align:center}.login-form{border:1px solid black;max-width:350px}.login-form input,.login-form label{display:block;text-align:center;margin-bottom:5px;margin-top:5px}</style>
 </head>
@@ -27,12 +26,5 @@
 			<form>
 		</div>
 	</div>
-	<script>
-		if('serviceWorker' in navigator) {
-		  navigator.serviceWorker
-				   .register('sw.js')
-				   .then(function() { console.log("Service Worker Registered"); });
-		}
-	</script>
 </body>
 </html>

@@ -7,7 +7,6 @@
 <body>
 	<div id="nav">
 		<input id="logout" type="button" value="Log Out" />
-		<input id="test" type="button" value="Test" />
 		<span id="users-online"></span>
 	</div>
 	<div id="body">
@@ -32,12 +31,6 @@
 
 	$('#logout').click(function getLogout(){
 		window.location.href = '/logout';
-	});
-
-	$('#test').click(function getTest(){
-		socket.emit('test', {}, function(data){
-			$('#body').html(data);
-		});
 	});
 </script>
 </html>
