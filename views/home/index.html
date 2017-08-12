@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<title>Tester app</title>
+</head>
+<body>
+	<div id="nav">
+		<input id="logout" type="button" value="Log Out" />
+		<input id="test" type="button" value="Test" />
+		<span id="users-online"></span>
+	</div>
+	<div id="body">
+	</div>	
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+	var socket = io({
+		transports: ['websocket']
+	});
+
+	setTimeout(function(){
+		if ($('#users-online').text() == ''){
+			$('#users-online').text('NOT CONNECTED');
+		}
+	},5000);
+
+	socket.on('sync', function(data){
+		$('#users-online').text(data + ' users online');
+	});
+
+	$('#logout').click(function getLogout(){
+		window.location.href = '/logout';
+	});
+
+	$('#test').click(function getTest(){
+		socket.emit('test', {}, function(data){
+			$('#body').html(data);
+		});
+	});
+</script>
+</html>

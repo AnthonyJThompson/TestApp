@@ -1,0 +1,19 @@
+{
+  "manifest_version": 1,
+  "name": "Tester App",
+  "short_name": "Tester",
+  "version": "versionString",
+  "default_locale": "en",
+  "description": "A plain text description",
+  "background_color": "black",
+  "theme_color": "black",
+  "display": "fullscreen",
+  "start_url": ".",
+  "icons": [
+    {
+      "src": "icon.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    }]
+	
+}
