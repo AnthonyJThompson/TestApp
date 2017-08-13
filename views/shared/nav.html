@@ -8,9 +8,7 @@
     <a id="logout" href="/logout"><input type="button" value="Log Out" /></a>
     <script>
         $('#new-character').click(function(){
-            $.get('/character/new', function(data){
-                $('#main').html(data);
-            });
+            load("character/new");
         });
     </script>
 </div>

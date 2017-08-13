@@ -8,14 +8,23 @@
 	<div id="nav"></div>
 	<div id="main"></div>	
 </body>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script>
 	var socket = io({
 		transports: ['websocket']
 	});
+
 	$.get("shared/nav", function(data){
 		$('#nav').html(data);
 	});
+
+	function load(location){
+		$.get(location, function(data){
+			$('#main').html(data);
+		});
+	}
 </script>
 </html>

@@ -3,10 +3,16 @@ var dbUrl = 'mongodb://localhost:27017/test';
 var users = [{_id: 'abc', name: 'test', password: '', isLoggedIn: false, lastActivity: '', name_id: 'abc_test'},
 			 {_id: 'abc1', name: 'test1', password: '', isLoggedIn: false, lastActivity: '', name_id: 'abc1_test1'}];
 var chars = [{_id: 'abc_test', name: 'myName', race: 'myRace', class: 'myClass'}];
+var races = [{name: 'Human', description: 'They do human stuff, pretty normal doods.'}, 
+			 {name: 'Orc', description: 'Green and nasty, they smash good and not good much else.'}, 
+			 {name: 'Elf', description: 'Fancy guys that like trees and nature and stuff.  You know the ones.'}];
+var classes = [{name: 'Warrior'}, {name: 'Rogue'}, {name: 'Mage'}, {name: 'Priest'}];
 var updateUsers = [];
 
-exports.users = users;
-exports.chars = chars;
+module.exports.users = users;
+module.exports.chars = chars;
+module.exports.races = races;
+module.exports.classes = classes;
 
 // MongoClient.connect(dbUrl, function(err, db) {
 		// if (err) throw err;
@@ -25,6 +31,11 @@ exports.chars = chars;
 	// });
 
 module.exports = {
+	users: users,
+	chars: chars,
+	races: races,
+	classes: classes,
+
 	login: function (data, callback){
 		user = getUser(data.name)
 		if (user && user.name == data.name 
