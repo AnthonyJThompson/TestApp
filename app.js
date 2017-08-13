@@ -29,7 +29,7 @@ app.use(session({
 app.use('/', function(req, res, next){
 	if(!req.session.userid && req.originalUrl != '/login'){
 		console.log('/ called - not logged in');
-		res.render('account/login.html');
+		res.render('account/login.html', { error: '' });
 	}
 	else{
 		console.log('/ called - logged in');

@@ -1,0 +1,16 @@
+<div>
+    <style>#logout{float:right;}</style>
+    <% if (charName) { %>
+        <%= charName %>
+    <% } else { %>
+        <input id="new-character" type="button" value="New Character" />
+    <% } %>
+    <a id="logout" href="/logout"><input type="button" value="Log Out" /></a>
+    <script>
+        $('#new-character').click(function(){
+            $.get('/character/new', function(data){
+                $('#main').html(data);
+            });
+        });
+    </script>
+</div>

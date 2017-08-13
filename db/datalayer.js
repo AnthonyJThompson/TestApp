@@ -1,7 +1,12 @@
 var MongoClient = require('mongodb').MongoClient;
 var dbUrl = 'mongodb://localhost:27017/test';
-var users = [{_id: 'abc', name: 'test', password: '', isLoggedIn: false, lastActivity: ''}];
+var users = [{_id: 'abc', name: 'test', password: '', isLoggedIn: false, lastActivity: '', name_id: 'abc_test'},
+			 {_id: 'abc1', name: 'test1', password: '', isLoggedIn: false, lastActivity: '', name_id: 'abc1_test1'}];
+var chars = [{_id: 'abc_test', name: 'myName', race: 'myRace', class: 'myClass'}];
 var updateUsers = [];
+
+exports.users = users;
+exports.chars = chars;
 
 // MongoClient.connect(dbUrl, function(err, db) {
 		// if (err) throw err;
@@ -28,8 +33,22 @@ module.exports = {
 			user.lastActivity = new Date();
 			updateUsers.push(user);
 			console.log(user);
-			callback(user);
-		}		
+		}	
+		callback(user);	
+	},
+	getChar: function (name_id, callback){
+		console.log('getChar called');
+		for(var i = 0; i < chars.length; i++)
+		{
+			console.log('char loop');
+			if(chars[i]._id == name_id)
+			{
+				console.log('char found');
+				callback(chars[i]);
+				return;
+			}
+		}
+		callback(false);
 	}
 }
 
