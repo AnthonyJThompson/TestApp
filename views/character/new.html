@@ -1,29 +1,197 @@
-<style>div.clear{clear:both}div.product-chooser{padding-top:10px}div.product-chooser div.product-chooser-item{padding:11px;border-radius:6px;cursor:pointer;position:relative;border:1px solid #efefef;margin-bottom:10px;margin-left:10px;margin-right:10x}div.product-chooser div.product-chooser-item.selected{border:4px solid #428bca;background:#efefef;padding:8px;filter:alpha(opacity=100);opacity:1}div.product-chooser div.product-chooser-item img{padding:0}div.product-chooser div.product-chooser-item span.title{display:block;text-align:center;margin:10px 0 5px;font-weight:700;font-size:12px}div.product-chooser div.product-chooser-item span.description{font-size:12px;text-align:center}div.product-chooser div.product-chooser-item input{position:absolute;left:0;top:0;visibility:hidden}</style>
+<style>div.clear {
+        clear: both
+    }
+    
+    div.chooser {
+        padding-top: 10px;
+    }
+    
+    div.chooser div.chooser-item {
+        padding: 11px;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        border: 1px solid #efefef;
+        margin-bottom: 10px;
+        display: inline-flex;
+        width:100%;
+        max-height:200px;
+    }
+    div.chooser div.chooser-item *{
+        display: grid;
+        align-items: center;
+    }
+    div.chooser div.chooser-item.selected {
+        border: 4px solid #428bca;
+        background: #efefef;
+        padding: 8px;
+        filter: alpha(opacity=100);
+        opacity: 1
+    }
+    
+    div.chooser div.chooser-item img {
+        padding: 0;
+        max-width: 100%;
+        max-height: 150px;
+        height: auto;
+    }
+    
+    div.chooser div.chooser-item span.title {
+        display: block;
+        text-align: center;
+        margin: 10px 0 5px;
+        font-weight: 700;
+        font-size: 12px
+    }
+    
+    div.chooser div.chooser-item span.description {
+        font-size: 12px;
+        text-align: center
+    }
+    
+    div.chooser div.chooser-item input {
+        position: absolute;
+        left: 0;
+        top: 0;
+        visibility: hidden
+    }
+    #race-chooser {
+        padding-bottom: 46px
+    }
+    #class-chooser {
+        padding-bottom: 46px
+    }
+    #name-chooser {
+        padding-bottom: 46px
+    }
+    #new-prev {
+        position: fixed;
+        bottom: 10px;
+        left: 10px;
+    }
 
+    #new-next {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        float: right;
+    }
+
+    #new-submit {
+        margin: 20px;
+    }
+
+    #name-chooser {
+        display: grid;
+    }
+
+    .character-name-entry {
+        font-size: 32px;
+    }
+</style>
 <div class="container">
-    <div class="row form-group product-chooser">
-        <% races.forEach(function(race) { %>
-            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                <div class="product-chooser-item">
-                    <img class="center-block" src="/img/<%- race.name %>.png" />
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <span class="title"><%= race.name %></span>
-                        <span class="description"><%= race.description %></span>
-                        <input type="radio" name="product" value="<%- race.name %>">
+    <form id="character-form" method="post" action="/character/new">
+        <div id="race-chooser" class="row form-group chooser">
+            <% races.forEach(function(race) { %>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="chooser-item">
+                        <div class="col-xs-3">
+                            <img class="center-block img-fluid" src="/img/<%- race.name %>.png" />
+                            <span class="title"><%= race.name %></span>
+                        </div>
+                        <div class="col-xs-9">
+                            <span class="description"><%= race.description %></span>
+                            <input type="radio" name="race" value="<%- race.name %>">
+                        </div>
+                        <div class="clear"></div>
                     </div>
-                    <div class="clear"></div>
                 </div>
-            </div>
-        <% }); %>
-    </div>
+            <% }); %>
+        </div>
+        <div id="class-chooser" class="row form-group chooser">
+            <% classes.forEach(function(cl) { %>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="chooser-item">
+                        <div class="col-xs-3">
+                            <!-- <img class="center-block img-fluid" src="/img/<%- cl.name %>.png" /> -->
+                            <span class="title"><%= cl.name %></span>
+                        </div>
+                        <div class="col-xs-9">
+                            <span class="description"><%= cl.description %></span>
+                            <input type="radio" name="class" value="<%- cl.name %>">
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+        <div id="name-chooser">
+            <label for="name" style="text-align:center">Character Name</label>
+            <input id="character-name-input" class="character-name-entry input-lg" type="text" name="name" required />
+            <button id="new-submit" type="submit" class="btn btn-lg">Submit</button>
+        </div>
+        <div>
+            <button id="new-prev" type="button" class="btn btn-lg">Previous</button>
+            <button id="new-next" type="button" class="btn btn-lg">Next</button>
+        </div>
+    </form>
 </div>
 
 <script>
-    $(function(){
-        $('div.product-chooser').not('.disabled').find('div.product-chooser-item').on('click', function(){
-            $(this).parent().parent().find('div.product-chooser-item').removeClass('selected');
-            $(this).addClass('selected');
-            $(this).find('input[type="radio"]').prop("checked", true);          
-        });
+    var page = 1;
+
+    $('#new-prev').hide();
+    $('#new-next').hide();
+
+    $('#class-chooser').hide();
+    $('#name-chooser').hide();
+
+    $('div.chooser').not('.disabled').find('div.chooser-item').on('click', function(){
+        $(this).parent().parent().find('div.chooser-item').removeClass('selected');
+        $(this).addClass('selected');
+        $(this).find('input[type="radio"]').prop("checked", true);  
+        $('#new-next').show();        
+    });
+
+    $('#new-next').click(function(){
+        if (page == 1){
+            $('#race-chooser').hide();
+            $('#class-chooser').show();
+            $('#new-prev').show();
+            $('#new-next').hide();
+            page = 2;
+        }
+        else if (page == 2){
+            $('#class-chooser').hide();
+            $('#name-chooser').show();
+            $('#new-next').hide();
+            page = 3;
+        }
+    });
+
+    $('#new-prev').click(function(){
+        if (page == 2){
+            $('#class-chooser').hide();
+            $('#race-chooser').show();
+            $('#new-prev').hide();
+            $('#new-next').show();
+            page = 1;
+        }
+        else if (page == 3){
+            $('#name-chooser').hide();
+            $('#class-chooser').show();
+            page = 2;
+        }
+    });
+
+    $('#character-name-input').click(function(){
+        if (screen.height <= 640){
+            $('#new-prev').hide();
+        }
+    });
+    $('#character-name-input').focusout(function(){
+        if (screen.height <= 640){
+            $('#new-prev').show();
+        }
     });
 </script>

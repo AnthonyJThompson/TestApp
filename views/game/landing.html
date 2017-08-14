@@ -1,0 +1,12 @@
+<div>
+    <style>#character-info{text-align:center;display:grid;}</style>
+    <div id="character-info">
+        <% if (character) { %>
+            <span>Name: <%= character.name %></span>
+            <span>Race: <%= character.race %></span>
+            <span>Class: <%= character.class %></span>
+        <% } else { %>
+            <span>You need to make a character first...</span>
+        <% } %>
+    </div>
+</div>

@@ -1,14 +1,17 @@
 <div>
-    <style>#logout{float:right;}</style>
-    <% if (charName) { %>
-        <%= charName %>
-    <% } else { %>
-        <input id="new-character" type="button" value="New Character" />
-    <% } %>
-    <a id="logout" href="/logout"><input type="button" value="Log Out" /></a>
+    <style>#nav-bar{text-align:center}#nav-bar{padding:10px}</style>
+    <div id="nav-bar">
+        <% if (!charName) { %>
+            <button id="new-character" class="btn btn-lg" type="button">New Character</button>
+        <% } %>
+        <button id="logout" class="btn btn-lg" type="button">Log Out</button>
+    </div>
     <script>
         $('#new-character').click(function(){
             load("character/new");
         });
+        $('#logout').click(function(){
+            window.location.href = '/logout';
+        })
     </script>
 </div>

@@ -17,14 +17,16 @@
 		transports: ['websocket']
 	});
 
-	$.get("shared/nav", function(data){
-		$('#nav').html(data);
-	});
-
 	function load(location){
 		$.get(location, function(data){
 			$('#main').html(data);
 		});
 	}
+
+	$.get("shared/nav", function(data){
+		$('#nav').html(data);
+	});
+
+	load("game/landing");
 </script>
 </html>

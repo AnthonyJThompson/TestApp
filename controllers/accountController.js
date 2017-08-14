@@ -9,6 +9,7 @@ module.exports.controller = function(app) {
 			if (data){
 				req.session.name = req.body.name;
 				req.session.userid = data._id;
+				req.session.user = data.name_id;
 				console.log('users id: ' + data._id);
 				res.redirect('/');
 			}
