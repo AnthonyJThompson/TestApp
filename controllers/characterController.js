@@ -1,10 +1,11 @@
-var db = require('../db/datalayer');
+var cService = require('../services/characterService');
+var globals = require('../db/globals');
 
 function createCharacter(req, callback){
-    db.getCharacter(req.session.userid, function(char){
+    cService.getCharacter(req.session.userid, function(char){
         if (!char){
             var character = {_userid: req.session.userid, name: req.body.name, race: req.body.race, class: req.body.class};
-            db.addCharacter(character, function(){
+            cService.addCharacter(character, function(){
                 callback();
             });
         }
@@ -17,7 +18,7 @@ function createCharacter(req, callback){
 module.exports.controller = function(app) {	
 	app.get('/character/new', function(req, res){
         if (req.xhr){
-            res.render('character/new.html', { races: db.races, classes: db.classes});
+            res.render('character/new.html', { races: globals.races, classes: globals.classes});
         }
         else{
             res.redirect('/');
@@ -25,12 +26,21 @@ module.exports.controller = function(app) {
     });
 
     app.post('/character/new', function(req, res){
-        console.log('race: '+ req.body.race);
-        console.log('class: '+ req.body.class);
-        console.log('name: '+ req.body.name);
-
         createCharacter(req, function(){
             res.redirect('/');
+        });
+    });
+ 
+    app.post('/character/delete', function(req, res){
+        cService.getCharacter(req.session.userid, function(char){
+            if (char){
+                cService.deleteCharacter(char, function(){
+                    res.redirect('/');
+                });
+            }
+            else{
+                res.redirect('/');
+            }
         });
     });
 }

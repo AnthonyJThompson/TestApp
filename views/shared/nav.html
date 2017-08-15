@@ -3,12 +3,19 @@
     <div id="nav-bar">
         <% if (!char) { %>
             <button id="new-character" class="btn btn-lg" type="button">New Character</button>
+        <% } else { %>
+            <button id="delete-character" class="btn btn-lg" type="button">Delete Character</button>
         <% } %>
         <button id="logout" class="btn btn-lg" type="button">Log Out</button>
     </div>
     <script>
         $('#new-character').click(function(){
             load("character/new");
+        });
+        $('#delete-character').click(function(){
+            $.post('character/delete', function(){
+                window.location.href = '/';
+            })
         });
         $('#logout').click(function(){
             window.location.href = '/logout';

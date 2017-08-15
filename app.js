@@ -9,7 +9,6 @@ var bodyparser = require('body-parser');
 var cookie = require('cookie');
 var MongoStore = require('connect-mongo')(session);
 var mongoStore = new MongoStore({ url: 'mongodb://localhost:27017/test'});
-//var db = require('/db/datalayer');
 var connections = [];
 
 app.engine('html', require('ejs').renderFile);

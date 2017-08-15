@@ -1,11 +1,11 @@
-var db = require('../db/datalayer');
+var globals = require('../db/globals');
 
 module.exports.controller = function(app) {	
 	app.post('/login', function(req, res){
 		var err = '';
 		console.log('req.body:' + req.body);
 		// check user and password
-		db.login({name: req.body.name, password: req.body.password}, function(data){
+		globals.login({name: req.body.name, password: req.body.password}, function(data){
 			if (data){
 				req.session.name = req.body.name;
 				req.session.userid = data._id;

@@ -1,8 +1,8 @@
-var db = require('../db/datalayer');
+var cService = require('../services/characterService');
 
 module.exports.controller = function(app) {	
 	app.get('/game/landing', function(req, res){
-        db.getCharacter(req.session.userid, function(char) {
+        cService.getCharacter(req.session.userid, function(char) {
             res.render('game/landing.html', {
                 character: char
             });
