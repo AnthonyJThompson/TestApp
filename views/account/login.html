@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
-	<title>Tester app - Login</title>
-	<style>.login-panel{width:300px}.login-header h3{font-size:30px;margin-top:10px;margin-bottom:10px}.login-panel *,.login-panel{margin-left:auto;margin-right:auto;text-align:center;list-style:none}.login-form{border:1px solid black;max-width:350px}.login-form input,.login-form label{display:block;text-align:center;margin-bottom:5px;margin-top:5px}</style>
+	<title>Tester App</title>
+	<style>.changelog{padding-top:10px;text-align:center}.login-panel{width:300px}.login-header h3{font-size:30px;margin-top:10px;margin-bottom:10px}.login-panel *,.login-panel{margin-left:auto;margin-right:auto;text-align:center;list-style:none}.login-form{border:4px solid #428bca;;max-width:350px;padding:15px}.login-form input,.login-form label{display:block;text-align:center;margin-bottom:5px;margin-top:5px}</style>
 </head>
 <body>
 	<div class="login-panel">
@@ -14,24 +14,24 @@
 			<form id="login-form" method="post" action="/login">
 				<div>
 					<label for="name">User Name</label>
-					<input id ="name" name="name" type="text" />
+					<input id ="name" class="input-lg" name="name" type="text" />
 				</div>
 				<div>
 					<label for="password">Password</label>
-					<input id="password" name="password" type="text" />
+					<input id="password" class="input-lg" name="password" type="password" />
 				</div>
 				<div class="login-error"><%= error %></div>
 				<div>
-					<input id="login-button" type="submit" value="Submit" />
+					<input id="login-button" class="btn-lg" type="submit" value="Submit" />
 				</div>
 			<form>
 		</div>
 	</div>
-	<div>
-		<ul>
-			<li>08/13/2017 - Add basic character creation</li>
-			<li>08/13/2017 - Add update logs</li>
-		</ul>
+	<div class="changelog">
+		<div>08/14 - characters actually save</div>
+		<div>08/14 - mongo db setup</div>
+		<div>08/13 - basic character creation</div>
+		<div>08/13 - update logs</div>
 	</div>
 </body>
 </html>
